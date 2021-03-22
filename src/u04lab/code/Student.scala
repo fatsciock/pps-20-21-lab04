@@ -20,15 +20,11 @@ object Student {
     var courseList = List.nil[Course]
 
     override def enrolling(course: Course): Unit = {
-      if(courseList == Nil()) {
-       courseList = List.Cons(course, Nil())
-      } else {
-        append(courseList, Cons[Course](course, Nil()))
-      }
+      courseList = append(courseList, Cons[Course](course, Nil()))
     }
 
     override def courses: List[String] = {
-      map(courseList)(_.toString())
+      map(courseList)(c => c.name)
     }
 
     override def hasTeacher(teacher: String): Boolean = ???
@@ -59,7 +55,7 @@ object Try extends App {
   s3.enrolling(cPPS)
   s3.enrolling(cPCD)
   s3.enrolling(cSDR)
-  println(s1.courses, s2.courses, s3.courses) // (Cons(PCD,Cons(PPS,Nil())),Cons(PPS,Nil()),Cons(SDR,Cons(PCD,Cons(PPS,Nil()))))
+  println(s1.courses, s2.courses, s3.courses) // (Cons(PPS,Cons(PCD,Nil())),Cons(PPS,Nil()),Cons(PPS,Cons(PCD,Cons(SDR,Nil()))))
   /*println(s1.hasTeacher("Ricci")) // true*/
 }
 
