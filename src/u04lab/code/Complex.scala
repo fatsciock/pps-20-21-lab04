@@ -10,7 +10,7 @@ trait Complex {
 object Complex {
   def apply(re:Double, im:Double):Complex = new ComplexImpl(re, im)
 
-  private class ComplexImpl(override val re: Double, override val im: Double) extends Complex {
+  private case class ComplexImpl(override val re: Double, override val im: Double) extends Complex {
     override def +(c: Complex): Complex = {
       Complex((re + c.re), (im + c.im))
     }
@@ -27,6 +27,8 @@ object TryComplex extends App {
   println(c, c.re, c.im) // (ComplexImpl(18.0,21.0),18.0,21.0)
   val c2 = a(0) * a(1)
   println(c2, c2.re, c2.im) // (ComplexImpl(-10.0,30.0),-10.0,30.0)
+  println(Complex(10,20) == Complex(10,20)) // must be true
+
 }
 
 /** Hints:
