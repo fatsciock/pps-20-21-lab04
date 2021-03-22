@@ -27,7 +27,9 @@ object Student {
       map(courseList)(c => c.name)
     }
 
-    override def hasTeacher(teacher: String): Boolean = ???
+    override def hasTeacher(teacher: String): Boolean = {
+      contains(map(courseList)(c => c.teacher))(f => f.equals(teacher))
+    }
   }
 }
 
@@ -56,7 +58,7 @@ object Try extends App {
   s3.enrolling(cPCD)
   s3.enrolling(cSDR)
   println(s1.courses, s2.courses, s3.courses) // (Cons(PPS,Cons(PCD,Nil())),Cons(PPS,Nil()),Cons(PPS,Cons(PCD,Cons(SDR,Nil()))))
-  /*println(s1.hasTeacher("Ricci")) // true*/
+  println(s1.hasTeacher("Ricci")) // true
 }
 
 /** Hints:

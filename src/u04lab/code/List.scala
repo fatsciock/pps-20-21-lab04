@@ -34,6 +34,12 @@ object Lists extends App {
       case Nil() => Nil()
     }
 
+    def contains[A](l: List[A])(f: A => Boolean): Boolean = l match {
+      case Cons(h,_) if f(h) => true
+      case Cons(_,t) => contains(t)(f)
+      case _ => false
+    }
+
     def filter[A](l: List[A])(f: A => Boolean): List[A] = l match {
       case Cons(h,t) if f(h) => Cons(h, filter(t)(f))
       case Cons(h,t) => filter(t)(f)
