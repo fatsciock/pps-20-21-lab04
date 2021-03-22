@@ -11,17 +11,39 @@ trait Student {
   def hasTeacher(teacher: String): Boolean // is the student participating to a course of this teacher?
 }
 
+object Student {
+  def apply(name: String, year: Int = 2017): Student = StudentImpl(name, year)
+
+  private case class StudentImpl(override val name: String, override val year: Int) extends Student {
+    import List._
+
+    var courseList = List.nil[Course]
+
+    override def enrolling(course: Course): Unit = {
+      if(courseList == Nil()) {
+       courseList = List.Cons(course, Nil())
+      } else {
+        append(courseList, Cons[Course](course, Nil()))
+      }
+    }
+
+    override def courses: List[String] = {
+      map(courseList)(_.toString())
+    }
+
+    override def hasTeacher(teacher: String): Boolean = ???
+  }
+}
+
 trait Course {
   def name: String
   def teacher: String
 }
 
-object Student {
-  def apply(name: String, year: Int = 2017): Student = ???
-}
-
 object Course {
-  def apply(name: String, teacher: String): Course = ???
+  def apply(name: String, teacher: String): Course = new CourseImpl(name, teacher)
+
+  private case class CourseImpl(override val name: String, override val teacher: String) extends Course
 }
 
 object Try extends App {
@@ -38,7 +60,7 @@ object Try extends App {
   s3.enrolling(cPCD)
   s3.enrolling(cSDR)
   println(s1.courses, s2.courses, s3.courses) // (Cons(PCD,Cons(PPS,Nil())),Cons(PPS,Nil()),Cons(SDR,Cons(PCD,Cons(PPS,Nil()))))
-  println(s1.hasTeacher("Ricci")) // true
+  /*println(s1.hasTeacher("Ricci")) // true*/
 }
 
 /** Hints:
