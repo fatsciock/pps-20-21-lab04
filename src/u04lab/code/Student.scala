@@ -7,6 +7,7 @@ trait Student {
   def name: String
   def year: Int
   def enrolling(course: Course): Unit // the student participates to a Course
+  def enrolling2(course: Course*): Unit
   def courses: List[String] // names of course the student participates to
   def hasTeacher(teacher: String): Boolean // is the student participating to a course of this teacher?
 }
@@ -20,7 +21,13 @@ object Student {
     var courseList = List.nil[Course]
 
     override def enrolling(course: Course): Unit = {
-      courseList = append(courseList, Cons[Course](course, Nil()))
+        courseList = append(courseList, Cons[Course](course, Nil()))
+    }
+
+    override def enrolling2(course: Course*): Unit = {
+      for (c <- course) {
+        courseList = append(courseList, Cons[Course](c, Nil()))
+      }
     }
 
     override def courses: List[String] = {
@@ -59,6 +66,9 @@ object Try extends App {
   s3.enrolling(cSDR)
   println(s1.courses, s2.courses, s3.courses) // (Cons(PPS,Cons(PCD,Nil())),Cons(PPS,Nil()),Cons(PPS,Cons(PCD,Cons(SDR,Nil()))))
   println(s1.hasTeacher("Ricci")) // true
+  val s4 = Student("andrea")
+  s4.enrolling2(cPPS, cPCD, cSDR)
+  println(s4.courses)
 }
 
 /** Hints:
